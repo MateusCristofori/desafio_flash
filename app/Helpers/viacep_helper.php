@@ -9,5 +9,5 @@ function viacep(string $cep)
 
     $requestGET = $client->request("GET", "viacep.com.br/ws/{$cep}/json/");
 
-    return $requestGET->getBody();
+    return json_decode($requestGET->getBody());
 }

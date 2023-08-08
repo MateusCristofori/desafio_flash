@@ -1,5 +1,7 @@
 <?php echo $this->extend("master") ?>
 
+<?php helper("teste") ?>
+
 <?php echo $this->section("content") ?>
 
 
@@ -23,7 +25,6 @@
             <small class="text-body-secondary"><?php echo $delivery->status ?></small>
         </a>
         <button type="button" class="btn btn-primary" style="width: 10%;" onclick="redirect()">Update</button>
-        <button type="button" class="btn btn-danger" style="width: 10%;" onclick="">Delete</button>
     </div>
 
 <?php endforeach ?>

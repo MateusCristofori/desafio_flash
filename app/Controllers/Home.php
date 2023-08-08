@@ -49,16 +49,15 @@ class Home extends BaseController
         }
 
         $cep = $this->request->getGetPost()["cep"];
-        $validationCEP =  json_decode(viacep(formatCEP($cep)));
-        if (!$validationCEP->erro) {
-            return redirect()->route("home.index")->with("CEP_error", "CEP inválido. Tente novamente.")->withInput();
+        $validationCEP = viacep(formatCEP($cep));
+        if ($validationCEP->erro) {;
+            return redirect()->route("home.index", ["session" => session()->setFlashdata("CEP_error", "CEP inválido. Tente novamente")]);
         }
 
         $data = [
             "firstName" => $this->request->getGetPost()["firstName"],
             "lastName" => $this->request->getGetPost()["lastName"],
             "email" => $this->request->getGetPost()["email"],
-            "password" => password_hash($this->request->getGetPost()["password"], PASSWORD_DEFAULT),
             "cpf" => $this->request->getGetPost()["cpf"],
             "cep" => $validationCEP->cep,
             "city" => $validationCEP->localidade,

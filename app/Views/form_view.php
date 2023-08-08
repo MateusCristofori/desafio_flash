@@ -4,6 +4,7 @@
 
 <form class="row g-3" action="<?php echo url_to("home.validation") ?>" method="post">
 
+
     <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Nome</label>
         <input type="text" class="form-control" id="inputFirstName" name="firstName">
@@ -27,8 +28,7 @@
     <div class="col-6">
         <label for="inputAddress" class="form-label">CEP</label>
         <input type="text" class="form-control" id="cep" placeholder="00000-000" name="cep">
-        <?php echo session()->getFlashdata("CEP_error")["cep"] ?? "" ?>
-        <?php echo session()->getFlashdata("errors")["cep"] ?? "" ?>
+        <?php echo session()->getFlashdata("CEP_error") ?? "" ?>
     </div>
     <div class="col-6">
         <label for="inputAddress2" class="form-label">Status</label>
@@ -49,6 +49,5 @@
         <button type="submit" class="btn btn-primary">Cadastrar</button>
     </div>
 </form>
-
 
 <?php echo $this->endSection() ?>

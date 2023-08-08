@@ -14,7 +14,15 @@ class DeliverymanModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        "firstName"
+        "firstName",
+        "lastName",
+        "email",
+        "cpf",
+        "cep",
+        "city",
+        "created_at",
+        "updated_at",
+        "status"
     ];
 
     // Dates

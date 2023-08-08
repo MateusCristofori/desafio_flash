@@ -40,18 +40,18 @@ class Deliveryman extends Migration
                 "constraint" => 50
             ],
             "created_at" => [
-                "type" => "TIMESTAMP",
-                "default" => new RawSql("CURRENT_TIME"),
+                "type"    => "TIMESTAMP",
+                "default" => new RawSql("CURRENT_TIMESTAMP"),
             ],
             "updated_at" => [
-                "type" => "TIMESTAMP",
-                "default" => new RawSql("CURRENT_TIME"),
+                "type"    => "TIMESTAMP",
+                "default" => new RawSql("CURRENT_TIMESTAMP"),
             ],
             "status" => [
                 "type" => "ENUM",
                 "constraint" => ["Entregue", "A caminho", "A confirmar"],
-                "default" => "A confirmar"
-            ]
+                "default" => "A confirmar",
+            ],
         ]);
         $this->forge->addKey("id", true);
         $this->forge->createTable("deliveryman");

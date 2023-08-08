@@ -28,7 +28,7 @@ class Database extends Config
         'DSN'      => '',
         'hostname' => 'localhost',
         'username' => 'desafio_flash',
-        'password' => '',
+        'password' => 'xarope1234',
         'database' => '',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
