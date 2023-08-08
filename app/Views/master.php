@@ -10,8 +10,15 @@
 
 <body>
 
+    <?php echo $this->include("navbar") ?>
+
     <?php echo $this->renderSection("content") ?>
 
+    <script>
+        function redirect() {
+            return (window.location.href = 'http://localhost:8080/updateDelivery');
+        }
+    </script>
 </body>
 
 </html>

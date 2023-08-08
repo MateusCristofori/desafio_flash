@@ -6,22 +6,66 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return view("form");
+        return view("form_view");
     }
 
     public function validation()
     {
-        $rules = [
-            "email" => "required|valid_email",
-            "password" => "required",
-            "cep" => "required",
-            //"infoAddiotional" => "required",
-        ];
+        helper(["viacep", "formatCEP"]);
+        $db = db_connect();
 
-        if ($this->validate($rules)) {
-            return redirect()->route("dashboard.index");
+        $validation = [
+            "firstName" => [
+                "rules" => "required",
+                "errors" => ["required" => "O 'nome' é obrigatório"]
+            ],
+            "lastName" => [
+                "rules" => "required",
+                "errors" => ["required" => "O 'sobrenome' é obrigatório"]
+            ],
+            "email" => [
+                "rules" => "required|valid_email",
+                "errors" => ["required" => "O 'email' é obrigatório", "valid_email" => "O email precisa ser válido!"]
+            ],
+            "cpf" => [
+                "rules" => "required|max_length[14]",
+                "errors" => ["required" => "O 'CPF' é obrigatório"]
+            ],
+            "cep" => [
+                "rules" => "required|max_length[9]",
+                "errors" => ["required" => "O 'CEP' é obrigatório"]
+            ],
+            "city" => [
+                "rules" => "required",
+                "errors" => ["required" => "A 'cidade' é obrigatório."]
+            ],
+            "status" => [
+                "rules" => "required",
+                "errors" => ["required" => "Escolha um valor válido."]
+            ]
+        ];
+        if (!$this->validate($validation)) {
+            return redirect()->route("home.index")->with("errors", $this->validator->getErrors())->withInput();
         }
 
-        return redirect()->route("/")->with("errors", $this->validator->listErrors())->withInput();
+        $cep = $this->request->getGetPost()["cep"];
+        $validationCEP =  json_decode(viacep(formatCEP($cep)));
+        if (!$validationCEP->erro) {
+            return redirect()->route("home.index")->with("CEP_error", "CEP inválido. Tente novamente.")->withInput();
+        }
+
+        $data = [
+            "firstName" => $this->request->getGetPost()["firstName"],
+            "lastName" => $this->request->getGetPost()["lastName"],
+            "email" => $this->request->getGetPost()["email"],
+            "password" => password_hash($this->request->getGetPost()["password"], PASSWORD_DEFAULT),
+            "cpf" => $this->request->getGetPost()["cpf"],
+            "cep" => $validationCEP->cep,
+            "city" => $validationCEP->localidade,
+            "status" => $this->request->getGetPost()["status"]
+        ];
+        $db->table("deliveryman")->insert($data);
+
+        return redirect()->route("dashboard.index");
     }
 }

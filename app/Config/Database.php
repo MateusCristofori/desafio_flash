@@ -27,7 +27,7 @@ class Database extends Config
     public array $default = [
         'DSN'      => '',
         'hostname' => 'localhost',
-        'username' => '',
+        'username' => 'desafio_flash',
         'password' => '',
         'database' => '',
         'DBDriver' => 'MySQLi',
