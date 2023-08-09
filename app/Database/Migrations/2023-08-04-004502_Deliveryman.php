@@ -26,10 +26,12 @@ class Deliveryman extends Migration
             "email" => [
                 "type" => "VARCHAR",
                 "constraint" => 150,
+                "unique" => true
             ],
             "cpf" => [
                 "type" => "VARCHAR",
-                "constraint" => 11,
+                "constraint" => 14,
+                "unique" => true
             ],
             "cep" => [
                 "type" => "VARCHAR",

@@ -7,7 +7,7 @@ function viacep(string $cep)
 {
     $client = Services::curlrequest();
 
-    $requestGET = $client->request("GET", "viacep.com.br/ws/{$cep}/json/");
+    $requestGET = $client->request("GET", "viacep.com.br/ws/{$cep}/json");
 
     return json_decode($requestGET->getBody());
 }

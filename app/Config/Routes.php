@@ -32,8 +32,9 @@ $routes->set404Override();
 $routes->get('/', 'Home::index', ["as" => "home.index"]);
 $routes->post("/validation", "Home::validation", ["as" => "home.validation"]);
 $routes->get("/dashboard", "Dashboard::index", ["as" => "dashboard.index"]);
-$routes->get("/updateDelivery", "Dashboard::updateDelivery", ["as" => "dashboard.updateDelivery"]);
-
+$routes->get("/updateDelivery/(:any)", "Dashboard::updateDelivery/$1", ["as" => "dashboard.updateDelivery"]);
+$routes->post("/updateValidation", "Dashboard::validation", ["as" => "dashboard.validation"]);
+$routes->get("/delete/(:any)", "Dashboard::delete/$1", ["as" => "dashboard.delete"]);
 
 /*
  * --------------------------------------------------------------------

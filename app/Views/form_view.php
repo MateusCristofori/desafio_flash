@@ -3,8 +3,6 @@
 <?php echo $this->section("content") ?>
 
 <form class="row g-3" action="<?php echo url_to("home.validation") ?>" method="post">
-
-
     <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Nome</label>
         <input type="text" class="form-control" id="inputFirstName" name="firstName">
@@ -39,11 +37,6 @@
             <option value="Entregue">Entregue</option>
         </select>
         <?php echo session()->getFlashdata("errors")["status"] ?? "" ?>
-    </div>
-    <div class="col-md-6">
-        <label for="inputCity" class="form-label">Cidade</label>
-        <input type="text" class="form-control" id="inputCity" name="city">
-        <?php echo session()->getFlashdata("errors")["city"] ?? "" ?>
     </div>
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Cadastrar</button>

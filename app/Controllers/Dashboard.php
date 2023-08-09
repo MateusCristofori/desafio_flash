@@ -3,9 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\DeliverymanModel;
-use CodeIgniter\Controller;
 
-class Dashboard extends Controller
+class Dashboard extends BaseController
 {
 
     public function index()
@@ -20,13 +19,17 @@ class Dashboard extends Controller
         return view("dashboard_view", $data);
     }
 
-    public function updateDelivery()
+    public function updateDelivery(int $deliverymanID)
     {
-        return view("update_delivery_view");
+        $deliverymanModel = new DeliverymanModel();
+        return view("update_delivery_view", ["deliveryman" => $deliverymanModel->find($deliverymanID)]);
     }
 
     public function validation()
     {
+        $deliveryModel = new DeliverymanModel();
+        $deliverymanID = $this->request->getGetPost()["buttonInput"];
+
         $validation = [
             "firstName" => [
                 "rules" => "string",
@@ -37,9 +40,28 @@ class Dashboard extends Controller
                 "errors" => ["string" => "Seu sobrenome deve conter apenas letras."]
             ],
             "status" => [
-                "rules" => "matches['A confirmar', 'A caminho', 'Entregue',]",
-                "errors" => ["matches" => "Selecione um status válido."]
+                "rules" => "required",
+                "errors" => ["required" => "O status precisa ser selecionado."]
             ]
         ];
+        if (!$this->validate($validation)) {
+            return redirect()->route("dashboard.index")->with("errors", $this->validator->getErrors())->withInput();
+        }
+
+        $data = [
+            "firstName" => $this->request->getGetPost()["firstName"],
+            "lastName" => $this->request->getGetPost()["lastName"],
+            "status" => $this->request->getGetPost()["status"]
+        ];
+        $deliveryModel->update($deliverymanID, $data);
+
+        return redirect()->route("dashboard.index");
+    }
+
+    public function delete(int $deliverymanID)
+    {
+        $deliverymanModel = new DeliverymanModel();
+        $deliverymanModel->delete($deliverymanID);
+        return view("messages_view", ["message" => "Usuário deletado com sucesso."]);
     }
 }

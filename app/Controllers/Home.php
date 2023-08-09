@@ -35,10 +35,6 @@ class Home extends BaseController
                 "rules" => "required|max_length[9]",
                 "errors" => ["required" => "O 'CEP' é obrigatório"]
             ],
-            "city" => [
-                "rules" => "required",
-                "errors" => ["required" => "A 'cidade' é obrigatório."]
-            ],
             "status" => [
                 "rules" => "required",
                 "errors" => ["required" => "Escolha um valor válido."]
@@ -50,9 +46,10 @@ class Home extends BaseController
 
         $cep = $this->request->getGetPost()["cep"];
         $validationCEP = viacep(formatCEP($cep));
-        if ($validationCEP->erro) {;
-            return redirect()->route("home.index", ["session" => session()->setFlashdata("CEP_error", "CEP inválido. Tente novamente")]);
-        }
+
+        // if ($validationCEP->erro) {
+        //     return redirect()->route("home.index", [session()->setFlashdata("errors", "CEP inválido. Tente novamente")]);
+        // }
 
         $data = [
             "firstName" => $this->request->getGetPost()["firstName"],
@@ -61,7 +58,7 @@ class Home extends BaseController
             "cpf" => $this->request->getGetPost()["cpf"],
             "cep" => $validationCEP->cep,
             "city" => $validationCEP->localidade,
-            "status" => $this->request->getGetPost()["status"]
+            "status" => $this->request->getGetPost()["status"],
         ];
         $db->table("deliveryman")->insert($data);
 

@@ -18,6 +18,13 @@
         function redirect() {
             return (window.location.href = 'http://localhost:8080/updateDelivery');
         }
+
+        function confirmAction() {
+            if (!confirm("Deseja excluir o registro?")) {
+                return false;
+            }
+            return true;
+        }
     </script>
 </body>
 
