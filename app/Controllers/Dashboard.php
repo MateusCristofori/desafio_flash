@@ -63,7 +63,7 @@ class Dashboard extends BaseController
     {
         $deliverymanModel = new DeliverymanModel();
         $deliverymanModel->delete($deliverymanID);
-        return view("message_view", ["message" => "Usuário deletado com sucesso."]);
+        return view("message_view");
     }
 
     public function filter()
