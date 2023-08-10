@@ -47,9 +47,9 @@ class Home extends BaseController
         $cep = $this->request->getGetPost()["cep"];
         $validationCEP = viacep(formatCEP($cep));
 
-        // if ($validationCEP->erro) {
-        //     return redirect()->route("home.index", [session()->setFlashdata("errors", "CEP inválido. Tente novamente")]);
-        // }
+        if (isset($validationCEP->erro)) {
+            return redirect()->route("home.index", [session()->setFlashdata("errors", "CEP inválido. Tente novamente")]);
+        }
 
         $data = [
             "firstName" => $this->request->getGetPost()["firstName"],
