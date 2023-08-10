@@ -68,7 +68,7 @@ class Home extends BaseController
             "city" => $validationCEP->localidade,
             "status" => $this->request->getPost("status"),
         ];
-        $deliverymanModel->table("deliveryman")->insert($data);
+        $deliverymanModel->insert($data);
 
         return redirect()->route("dashboard.index");
     }
