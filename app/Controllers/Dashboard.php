@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\DeliverymanModel;
+use App\Controllers\Search;
 
 class Dashboard extends BaseController
 {
@@ -63,5 +64,24 @@ class Dashboard extends BaseController
         $deliverymanModel = new DeliverymanModel();
         $deliverymanModel->delete($deliverymanID);
         return view("messages_view", ["message" => "Usuário deletado com sucesso."]);
+    }
+
+    public function filter()
+    {
+        // $searchClass = new Search();
+        // $searchClass->index($this->request->getPost("searchBar"));
+
+        $deliveryamModel = new DeliverymanModel();
+        $searchBarInfo = $this->request->getPost("searchBar");
+
+        if (empty($searchBarInfo)) {
+            return redirect()->route("dashboard.index");
+        }
+
+        $filtered = $deliveryamModel->like(["firstName" => "%" . $searchBarInfo . "%"])->orLike(["lastName" => "%" . $searchBarInfo . "%"])->findAll();
+        if (!$filtered) {
+            return redirect()->route("dashboard.index", [session()->setFlashdata("errors", "Usuário não encontrado. Tente novamente.")]);
+        }
+        return view("dashboard_view", ["filtered" => $filtered, "pager" => $deliveryamModel->pager]);
     }
 }
