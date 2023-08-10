@@ -1,8 +1,16 @@
 <?php echo $this->extend("master") ?>
 
+<?php echo $this->section("head") ?>
+
+<head>
+    <?php echo $this->include("styles/formStyle") ?>
+</head>
+
+<?php echo $this->endSection() ?>
+
 <?php echo $this->section("content") ?>
 
-<form class="row g-3" action="<?php echo url_to("dashboard.validation") ?>" method="post">
+<form class="row g-3 formRegister" action="<?php echo url_to("dashboard.validation") ?>" method="post">
     <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Nome</label>
         <input type="text" class="form-control" id="inputFirstName" name="firstName" value="<?php echo $deliveryman->firstName ?>">
@@ -23,7 +31,7 @@
         </select>
         <?php echo session()->getFlashdata("errors")["status"] ?? "" ?>
     </div>
-    <div class="col-12">
+    <div class="col-12 buttonSubmit">
         <button type="submit" class="btn btn-primary">Atualizar</button>
         <input type="hidden" name="buttonInput" value="<?php echo $deliveryman->id ?>">
     </div>

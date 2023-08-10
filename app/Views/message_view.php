@@ -1,16 +1,32 @@
 <?php echo $this->extend("master") ?>
 
+<?php echo $this->section("head") ?>
+
+<head>
+    <style>
+        .message-card {
+            margin-top: 20px;
+            position: relative;
+            right: -10%;
+            width: 80%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .link {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<?php echo $this->endSection() ?>
+
 <?php echo $this->section("content") ?>
 
-<div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center w-100">
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <img src="..." class="rounded me-2" alt="...">
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            <?php echo $message ?>
-        </div>
+<div class="card message-card">
+    <div class="card-body">
+        <h4 class="card-title">Entregador deletado</h4>
+        <a href="<?php echo url_to("dashboard.index") ?>" class="btn btn-primary link">Voltar para a página inicial</a>
     </div>
 </div>
 
