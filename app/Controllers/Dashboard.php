@@ -71,6 +71,6 @@ class Dashboard extends BaseController
     public function filter()
     {
         $searchFilter = new Search();
-        return $searchFilter->filterSearch($this->request->getPost("searchBar"));
+        return $searchFilter->filterSearch($this->request->getGetPost()["searchBar"]);
     }
 }
