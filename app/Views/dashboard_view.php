@@ -6,7 +6,7 @@
 <?php echo $this->section("search_form") ?>
 
 <form class="d-flex" role="search" method="post" action="<?php echo url_to("dashboard.filter") ?>">
-    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" name="searchBar">
+    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" name="searchBar" value="<?php echo old("searchBar") ?>">
     <button class="btn btn-outline-success" type="submit">Buscar</button>
     <?php echo session()->getFlashdata("errors") ?? "" ?></p>
 </form>

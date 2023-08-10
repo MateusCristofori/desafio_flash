@@ -52,13 +52,13 @@ class Home extends BaseController
         }
 
         $data = [
-            "firstName" => $this->request->getGetPost()["firstName"],
-            "lastName" => $this->request->getGetPost()["lastName"],
-            "email" => $this->request->getGetPost()["email"],
-            "cpf" => $this->request->getGetPost()["cpf"],
+            "firstName" => $this->request->getPost("firstName"),
+            "lastName" => $this->request->getPost("lastName"),
+            "email" => $this->request->getPost("email"),
+            "cpf" => $this->request->getPost("cpf"),
             "cep" => $validationCEP->cep,
             "city" => $validationCEP->localidade,
-            "status" => $this->request->getGetPost()["status"],
+            "status" => $this->request->getPost("status"),
         ];
         $db->table("deliveryman")->insert($data);
 

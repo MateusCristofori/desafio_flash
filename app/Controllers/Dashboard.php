@@ -68,14 +68,11 @@ class Dashboard extends BaseController
 
     public function filter()
     {
-        // $searchClass = new Search();
-        // $searchClass->index($this->request->getPost("searchBar"));
-
         $deliveryamModel = new DeliverymanModel();
         $searchBarInfo = $this->request->getPost("searchBar");
 
         if (empty($searchBarInfo)) {
-            return redirect()->route("dashboard.index");
+            return redirect()->route("dashboard.index", [session()->setFlashdata("errors", "Campo de busca não pode estar vazio.")]);
         }
 
         $filtered = $deliveryamModel
