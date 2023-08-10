@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Classes\Search;
 use App\Models\DeliverymanModel;
-use App\Controllers\Search;
 
 class Dashboard extends BaseController
 {
@@ -29,7 +29,7 @@ class Dashboard extends BaseController
     public function validation()
     {
         $deliveryModel = new DeliverymanModel();
-        $deliverymanID = $this->request->getGetPost()["buttonInput"];
+        $deliverymanID = $this->request->getPost("buttonInput");
 
         $validation = [
             "firstName" => [
@@ -50,9 +50,9 @@ class Dashboard extends BaseController
         }
 
         $data = [
-            "firstName" => $this->request->getGetPost()["firstName"],
-            "lastName" => $this->request->getGetPost()["lastName"],
-            "status" => $this->request->getGetPost()["status"]
+            "firstName" => $this->request->getPost("firstName"),
+            "lastName" => $this->request->getPost("lastName"),
+            "status" => $this->request->getGetPost("status")
         ];
         $deliveryModel->update($deliverymanID, $data);
 
@@ -63,29 +63,12 @@ class Dashboard extends BaseController
     {
         $deliverymanModel = new DeliverymanModel();
         $deliverymanModel->delete($deliverymanID);
-        return view("messages_view", ["message" => "Usuário deletado com sucesso."]);
+        return view("message_view", ["message" => "Usuário deletado com sucesso."]);
     }
 
     public function filter()
     {
-        $deliveryamModel = new DeliverymanModel();
-        $searchBarInfo = $this->request->getPost("searchBar");
-
-        if (empty($searchBarInfo)) {
-            return redirect()->route("dashboard.index", [session()->setFlashdata("errors", "Campo de busca não pode estar vazio.")]);
-        }
-
-        $filtered = $deliveryamModel
-            ->like(["firstName" => "%" . $searchBarInfo . "%"])
-            ->orLike(["lastName" => "%" . $searchBarInfo . "%"])
-            ->orLike(["cpf" => "%" . $searchBarInfo . "%"])
-            ->orLike(["status" => "%" . $searchBarInfo . "%"])
-            ->orderBy("created_at", "DESC")
-            ->findAll();
-
-        if (!$filtered) {
-            return redirect()->route("dashboard.index", [session()->setFlashdata("errors", "Usuário não encontrado. Tente novamente.")]);
-        }
-        return view("dashboard_view", ["filtered" => $filtered, "pager" => $deliveryamModel->pager]);
+        $searchFilter = new Search();
+        return $searchFilter->filterSearch($this->request->getPost("searchBar"));
     }
 }

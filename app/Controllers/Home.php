@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\DeliverymanModel;
+
 class Home extends BaseController
 {
     public function index(): string
@@ -11,8 +13,7 @@ class Home extends BaseController
 
     public function validation()
     {
-        helper(["viacep", "formatCEP"]);
-        $db = db_connect();
+        $deliverymanModel = new DeliverymanModel();
 
         $validation = [
             "firstName" => [
@@ -48,19 +49,26 @@ class Home extends BaseController
         $validationCEP = viacep(formatCEP($cep));
 
         if (isset($validationCEP->erro)) {
-            return redirect()->route("home.index", [session()->setFlashdata("errors", "CEP inválido. Tente novamente")]);
+            return redirect()->route("home.index", [session()->setFlashdata("cep_error", "CEP inválido. Tente novamente")]);
+        }
+
+        $cpf = $this->request->getGetPost()["cpf"];
+        $email = $this->request->getGetPost()["email"];
+
+        if ($deliverymanModel->where("cpf", $cpf)->orWhere("email", $email)->findAll(1)) {
+            return redirect()->route("home.index", [session()->setFlashdata("emailcep_error", "Email ou CPF já cadastrados!")]);
         }
 
         $data = [
             "firstName" => $this->request->getPost("firstName"),
             "lastName" => $this->request->getPost("lastName"),
-            "email" => $this->request->getPost("email"),
-            "cpf" => $this->request->getPost("cpf"),
+            "email" => $email,
+            "cpf" => $cpf,
             "cep" => $validationCEP->cep,
             "city" => $validationCEP->localidade,
             "status" => $this->request->getPost("status"),
         ];
-        $db->table("deliveryman")->insert($data);
+        $deliverymanModel->table("deliveryman")->insert($data);
 
         return redirect()->route("dashboard.index");
     }

@@ -22,6 +22,7 @@
                     <small class="text-body-secondary"><?php echo $delivery->created_at ?></small>
                 </div>
                 <p class="mb-1"><?php echo $delivery->city ?> - CEP (<?php echo $delivery->cep ?>)</p>
+                <p class="text-body-secondary">CPF (<?php echo $delivery->cpf ?>)</p>
                 <small class="text-body-secondary"><?php echo $delivery->status ?></small>
             </a>
             <div class="mb-3">

@@ -3,7 +3,6 @@
 <?php echo $this->section("content") ?>
 
 <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center w-100">
-    <!-- Then put toasts within -->
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <img src="..." class="rounded me-2" alt="...">

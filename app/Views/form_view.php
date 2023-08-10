@@ -17,16 +17,19 @@
         <label for="inputEmail4" class="form-label">Email</label>
         <input type="email" class="form-control" id="inputEmail4" name="email">
         <?php echo session()->getFlashdata("errors")["email"] ?? "" ?>
+        <?php echo session()->getFlashdata("emailcep_error") ?? "" ?>
     </div>
     <div class="col-md-6">
         <label for="inputPassword4" class="form-label">CPF</label>
         <input type="text" class="form-control" id="cpf" name="cpf" placeholder="000.000.000-00">
         <?php echo session()->getFlashdata("errors")["cpf"] ?? "" ?>
+        <?php echo session()->getFlashdata("emailcep_error") ?? "" ?>
     </div>
     <div class="col-6">
         <label for="inputAddress" class="form-label">CEP</label>
         <input type="text" class="form-control" id="cep" placeholder="00000-000" name="cep">
-        <?php echo session()->getFlashdata("errors") ?? "" ?>
+        <?php echo session()->getFlashdata("errors")["cep"] ?? "" ?>
+        <?php echo session()->getFlashdata("cep_error") ?? "" ?>
     </div>
     <div class="col-6">
         <label for="inputAddress2" class="form-label">Status</label>
