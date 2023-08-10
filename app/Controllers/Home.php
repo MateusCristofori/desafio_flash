@@ -52,8 +52,8 @@ class Home extends BaseController
             return redirect()->route("home.index", [session()->setFlashdata("cep_error", "CEP inválido. Tente novamente")]);
         }
 
-        $cpf = $this->request->getGetPost()["cpf"];
-        $email = $this->request->getGetPost()["email"];
+        $cpf = $this->request->getPost("cpf");
+        $email = $this->request->getPost("email");
 
         if ($deliverymanModel->where("cpf", $cpf)->orWhere("email", $email)->findAll(1)) {
             return redirect()->route("home.index", [session()->setFlashdata("emailcep_error", "Email ou CPF já cadastrados!")]);
