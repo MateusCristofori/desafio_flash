@@ -78,7 +78,14 @@ class Dashboard extends BaseController
             return redirect()->route("dashboard.index");
         }
 
-        $filtered = $deliveryamModel->like(["firstName" => "%" . $searchBarInfo . "%"])->orLike(["lastName" => "%" . $searchBarInfo . "%"])->findAll();
+        $filtered = $deliveryamModel
+            ->like(["firstName" => "%" . $searchBarInfo . "%"])
+            ->orLike(["lastName" => "%" . $searchBarInfo . "%"])
+            ->orLike(["cpf" => "%" . $searchBarInfo . "%"])
+            ->orLike(["status" => "%" . $searchBarInfo . "%"])
+            ->orderBy("created_at", "DESC")
+            ->findAll();
+
         if (!$filtered) {
             return redirect()->route("dashboard.index", [session()->setFlashdata("errors", "Usuário não encontrado. Tente novamente.")]);
         }
