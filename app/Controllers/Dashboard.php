@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Classes\Search;
 use App\Models\DeliverymanModel;
+use CodeIgniter\Database\RawSql;
 
 class Dashboard extends BaseController
 {
@@ -52,6 +53,7 @@ class Dashboard extends BaseController
         $data = [
             "firstName" => $this->request->getPost("firstName"),
             "lastName" => $this->request->getPost("lastName"),
+            "updated_at" => new RawSql("CURRENT_TIMESTAMP"),
             "status" => $this->request->getGetPost("status")
         ];
         $deliveryModel->update($deliverymanID, $data);
